@@ -6,7 +6,7 @@ metadata:
   name: argocd
   namespace: argocd
 spec:
-  project: default
+  project: bootstrap
   source:
     repoURL: 'https://github.com/rodriwp/tfm'
     path: argocd/bootstrap
