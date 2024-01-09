@@ -21,7 +21,7 @@ The Makefile will execute any require commands as part of the cluster creation
 
 We need to add the repository credentials after installation is complete. Log in  argoCD CLI first
 ```
-argocd repocreds add https://github.com/rodriwp --github-app-id 224548 --github-app-installation-id 29068966 --github-app-private-key-path secrets/<>
+argocd repocreds add https://github.com/rodriwp --github-app-id xxxxxx --github-app-installation-id xxxxxxxx --github-app-private-key-path secrets/<>
 ```
 
 ## ArgoCD Bootstrap Installation Managed Cloud
