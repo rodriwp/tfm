@@ -1,9 +1,28 @@
 # ArgoCD Instalation
 This folder contains argocd and all the resources deploy by argoCD on a kubernetes cluster
 
+## Log into ArgoCD (after bootstrap is completed)
+1. Get admin password
+```
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+2. Open the port as ingress is not configure yet
+```
+kubectl port-forward -n argocd svc/argocd-server 8024:80
+```
+3. Login to argocd, add repo cred and add clustes: - open a new terminal. Username = admin, password is the value returned from step 6
+
+```
+argocd login localhost:8024 --grpc-web
+```
 
 ## ArgoCD Bootstrap Installation Bare Metal
 The Makefile will execute any require commands as part of the cluster creation
+
+We need to add the repository credentials after installation is complete. Log in  argoCD CLI first
+```
+argocd repocreds add https://github.com/rodriwp --github-app-id 224548 --github-app-installation-id 29068966 --github-app-private-key-path secrets/<>
+```
 
 ## ArgoCD Bootstrap Installation Managed Cloud
 
@@ -33,21 +52,5 @@ unable to recognize "STDIN": no matches for kind "AppProject" in version "argopr
 ```
 argocd repocreds add https://github.com/rodriwp --github-app-id 224548 --github-app-installation-id 29068966 --github-app-private-key-path secrets/<>
 ```
-
-## Log into ArgoCD
-1. Get admin password
-```
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-```
-2. Open the port as ingress is not configure yet
-```
-kubectl port-forward -n argocd svc/argocd-server 8024:80
-```
-3. Login to argocd, add repo cred and add clustes: - open a new terminal. Username = admin, password is the value returned from step 6
-
-```
-argocd login localhost:8024 --grpc-web
-```
-
 
 
