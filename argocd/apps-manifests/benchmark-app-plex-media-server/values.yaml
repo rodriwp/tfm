@@ -1,0 +1,8 @@
+whatever:
+  ingress:
+    enabled: false
+    # note put a domain name that points to your ip address here
+    url: https://demo-pms.example.com
+    ingressClassName: ingress-nginx
+  pms:
+    configStorage: 10Gi
