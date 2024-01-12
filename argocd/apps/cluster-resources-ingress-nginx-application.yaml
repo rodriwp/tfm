@@ -14,6 +14,7 @@ spec:
     path: argocd/apps-manifests/cluster-resources-ingress-nginx
     repoURL: 'https://github.com/rodriwp/tfm'
     helm:
+      releaseName: ingress-nginx
       valueFiles:
       - 'values.yaml'
   syncPolicy:
