@@ -5,7 +5,6 @@ plex-media-server:
     url: https://bare-metal.rodrigomompo.com
     ingressClassName: ingress-nginx
   pms:
-    configStorage: 10Gi
     extraEnv:
     # This claim is optional, and is only used for the first startup of PMS
     # The claim is obtained from https://www.plex.tv/claim/ is is only valid for a few minutes
