@@ -1,6 +1,6 @@
 plex-media-server:
   ingress:
-    enabled: true
+    enabled: false
     # note put a domain name that points to your ip address here
     url: https://bare-metal.rodrigomompo.com
     ingressClassName: ingress-nginx
