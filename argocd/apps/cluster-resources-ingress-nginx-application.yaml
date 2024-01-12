@@ -18,7 +18,3 @@ spec:
       valueFiles:
       - 'values.yaml'
   syncPolicy:
-    automated:
-      allowEmpty: true
-      selfHeal: true
-      prune: true
