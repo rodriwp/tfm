@@ -4,10 +4,6 @@ plex-media-server:
     # note put a domain name that points to your ip address here
     url: https://plex.rodrigomompo.com
     ingressClassName: nginx
-    annotations:
-      ingress.kubernetes.io/force-ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      cert-manager.io/cluster-issuer: letsencrypt-prod
   pms:
     extraEnv:
     # This claim is optional, and is only used for the first startup of PMS
