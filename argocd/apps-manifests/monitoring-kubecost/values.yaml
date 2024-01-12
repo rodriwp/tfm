@@ -1,9 +1,4 @@
 cost-analyzer:
-  global:
-    prometheus:
-      enabled: false
-      nodeExporter:
-        enabled: false
   networkCosts:
     podMonitor:
       enabled: true
