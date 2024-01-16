@@ -26,7 +26,7 @@ variable "desired_size" {
 }
 variable "disk_size" {
   description = "Node group disk size"
-  type       = number
+  type        = number
 }
 variable "instance_type" {}
 variable "vpc_id" {}
