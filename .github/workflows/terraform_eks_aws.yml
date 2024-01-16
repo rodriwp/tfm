@@ -1,0 +1,64 @@
+name: AWS Terraform
+on:
+  workflow_dispatch:
+    inputs:
+      applyTerraformToDev:
+        description: "Run Terraform Apply in Dev"
+        required: true
+        default: false
+        type: boolean
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+    paths:
+      - "terraform/**"
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  terraform-plan-all:
+    name: 'Terraform Plan'
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') != true && github.event.inputs.applyTerraformToDev != 'true'
+    strategy:
+      matrix:
+        env: [managed-cloud]
+        region: [eu-central-1]
+      fail-fast: false
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Plan AWS terraform
+        uses: ./.github/workflows/composite/deploy-terraform
+        with:
+          region: ${{ matrix.region}}
+          environment: ${{ matrix.env}}
+          token: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
+          runApply: false
+          workingDirectory: ./terraform/0_aws_terraform
+
+  terraform-apply-prod-and-control:
+    name: 'Terraform Apply'
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') == true
+    strategy:
+      matrix:
+        env: [ managed-cloud ]
+        region: [ eu-central-1 ]
+      fail-fast: false
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deploy AWS terraform in prod and control
+        uses: ./.github/workflows/composite/deploy-terraform
+        with:
+          region: ${{ matrix.region}}
+          environment: ${{ matrix.env}}
+          token: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
+          runApply: true
+          workingDirectory: ./terraform/0_aws_terraform
+

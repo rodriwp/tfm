@@ -1,0 +1,11 @@
+account_name  = "managed-cloud"
+account_id    = 659411004637
+region        = "eu-central-1"
+region_code   = "ec1"
+min_size      = 3
+max_size      = 3
+desired_size  = 3
+disk_size     = 50
+instance_type = "t3.medium"
+vpc_id        = "vpc-0b0435f4b0a208995"
+subnet_ids    = ["subnet-049200b294e7b8432", "subnet-0e2b5ab46af917082", "subnet-0363e61eaee80fa1d"]

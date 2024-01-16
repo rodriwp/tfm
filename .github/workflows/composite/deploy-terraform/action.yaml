@@ -1,0 +1,55 @@
+name: "AWS Terraform Deploy"
+description: "init, plan, and deploy terraform"
+inputs:
+  region:
+    required: true
+  environment:
+    required: true
+  token:
+    required: true
+  runApply:
+    required: true
+  workingDirectory:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ inputs.token }}
+
+    - name: Setup Terraform variables
+      shell: bash
+      working-directory: ${{ inputs.workingDirectory }}
+      id: vars
+      run: |-
+        pwd
+        cat ../environment_variables/${{ inputs.environment }}/${{ inputs.region }}/variables.tfvars > env.auto.tfvars
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      working-directory: ${{ inputs.workingDirectory }}
+      shell: bash
+      run: terraform init -backend-config="backend_config/${{ inputs.environment }}/${{ inputs.region }}/config.tfbackend" --reconfigure
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      working-directory: ${{ inputs.workingDirectory }}
+      shell: bash
+      run: terraform fmt -check -recursive
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      if: ${{ inputs.runApply != 'true'}}
+      working-directory: ${{ inputs.workingDirectory }}
+      run: terraform plan
+      shell: bash
+
+    # Generates an execution plan for Terraform and applies it
+    - name: Terraform Apply
+      if: ${{ inputs.runApply == 'true'}}
+      working-directory: ${{ inputs.workingDirectory }}
+      shell: bash
+      run: terraform apply -auto-approve
