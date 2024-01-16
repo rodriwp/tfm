@@ -6,7 +6,7 @@ provider "aws" {
 }
 
 locals {
-  name                             = "mompo-${var.account_name}-${var.region_code}-eks"
+  name                             = "${var.account_name}-${var.region_code}-eks"
   region                           = var.region
   cluster_version                  = "1.28"
   coredns_addon_version            = "v1.10.1-eksbuild.6"
@@ -136,7 +136,7 @@ module "iam_eks_role_vpc_cni_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "5.33.0"
 
-  role_name             = "mompo-${var.account_name}-${var.region_code}-eks-role-vpc-cni-irsa"
+  role_name             = "${var.account_name}-${var.region_code}-eks-role-vpc-cni-irsa"
   attach_vpc_cni_policy = true
   vpc_cni_enable_ipv4   = true
   oidc_providers = {
@@ -152,7 +152,7 @@ module "ebs_csi_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "5.33.0"
 
-  role_name             = "mompo-${var.account_name}-${var.region_code}-eks-role-ebs-csi"
+  role_name             = "${var.account_name}-${var.region_code}-eks-role-ebs-csi"
   attach_ebs_csi_policy = true
 
   oidc_providers = {
@@ -168,7 +168,7 @@ module "node_termination_handler_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "5.33.0"
 
-  role_name                              = "mompo-${var.account_name}-${var.region_code}-eks-role-node-termination-handler"
+  role_name                              = "${var.account_name}-${var.region_code}-eks-role-node-termination-handler"
   attach_node_termination_handler_policy = true
 
   oidc_providers = {
