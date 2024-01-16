@@ -1,6 +1,6 @@
 firsttimeinstalation:
 	echo "127.0.0.1  bare-metal.rodrigomompo.com" | sudo tee -a /etc/hosts
-	echo "172.19.0.2  plex.rodrigomompo.com" | sudo tee -a /etc/hosts
+	echo "172.19.0.2  plex.k8s.rodrigomompo.com" | sudo tee -a /etc/hosts
 	wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG=v5.6.0 bash
 	brew install k3d
 	brew install kustomize

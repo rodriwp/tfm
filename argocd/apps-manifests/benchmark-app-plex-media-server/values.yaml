@@ -2,7 +2,7 @@ plex-media-server:
   ingress:
     enabled: true
     # note put a domain name that points to your ip address here
-    url: https://plex.rodrigomompo.com
+    url: https://plex.k8s.rodrigomompo.com
     ingressClassName: nginx
   pms:
     extraEnv:
