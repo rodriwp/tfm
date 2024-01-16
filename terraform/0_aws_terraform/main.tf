@@ -10,7 +10,7 @@ locals {
   region                           = var.region
   cluster_version                  = "1.27"
   coredns_addon_version            = "v1.10.1-eksbuild.6"
-  kube-proxy_addon_version         = "v1.28.4-eksbuild.1"
+  kube-proxy_addon_version         = "v1.27.1-eksbuild.1"
   vpc-cni_addon_version            = "v1.16.0-eksbuild.1"
   aws-ebs-csi-driver_addon_version = "v1.26.1-eksbuild.1"
   tags = {
