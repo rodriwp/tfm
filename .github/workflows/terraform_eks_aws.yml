@@ -42,7 +42,6 @@ jobs:
       - name: Plan AWS terraform
         uses: ./.github/workflows/composite/deploy-terraform
         with:
-          entrypoint: ${{ env.entrypoint}}
           region: ${{ matrix.region}}
           environment: ${{ matrix.env}}
           TF_API_TOKEN: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
@@ -67,7 +66,6 @@ jobs:
       - name: Plan AWS terraform
         uses: ./.github/workflows/composite/deploy-terraform
         with:
-          entrypoint: ${{ env.entrypoint}}
           region: ${{ matrix.region}}
           environment: ${{ matrix.env}}
           TF_API_TOKEN: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
@@ -91,7 +89,6 @@ jobs:
       - name: Plan AWS terraform
         uses: ./.github/workflows/composite/deploy-terraform
         with:
-          entrypoint: ${{ env.entrypoint}}
           region: ${{ matrix.region}}
           environment: ${{ github.event.inputs.onEnvironment}}
           TF_API_TOKEN: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
