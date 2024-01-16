@@ -16,11 +16,11 @@ data "tfe_outputs" "tf_eks_state" {
   workspace    = "mompo-${var.account_name}-${var.region_code}-eks"
 }
 data "aws_eks_cluster" "default" {
-  name = data.tfe_outputs.tf_eks_state.values.cluster_id
+  name = data.tfe_outputs.tf_eks_state.values.cluster_name
 }
 
 data "aws_eks_cluster_auth" "default" {
-  name = data.tfe_outputs.tf_eks_state.values.cluster_id
+  name = data.tfe_outputs.tf_eks_state.values.cluster_name
 }
 
 ################################################################################
