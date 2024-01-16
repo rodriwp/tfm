@@ -33,11 +33,11 @@ aws eks update-kubeconfig --region eu-central-1 --name managed-cloud-ec1-eks  --
 NOTE: If the aws-auth configmap hasn't been applied yet, the only user that will work is the automation user which created the cluster. In the future argoCD will apply this map, so for bootstrap automation user will be needed.
 2. Export KUBECONFIG
 ```
-export KUBECONFIG=~/.kube/managed-cloud-eks
+export KUBECONFIG=~/.kube/managed-cloud-ec1-eks
 ```
 3. Switch context to this config
 ```
-kubectl config use-context $(kubectl config get-contexts -o=name | grep managed-cloud-eks)
+kubectl config use-context $(kubectl config get-contexts -o=name | grep managed-cloud-ec1-eks)
 ```
 4. Install argocd - Open this repo in a terminal
 ```
