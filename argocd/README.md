@@ -28,7 +28,7 @@ argocd repocreds add https://github.com/rodriwp --github-app-id xxxxxx --github-
 
 1. Fetch kubeconfigs - run the corresponding commands to fetch kubeconfigs. This assumes you have the correct users and roles configure in your machine.
 ```
-aws eks update-kubeconfig --region eu-west-2 --name managed-cloud-eks  --profile <user_profile_with_assume_role_for_managed-cloud-eks> --kubeconfig ~/.kube/managed-cloud-eks"
+aws eks update-kubeconfig --region eu-central-1 --name managed-cloud-ec1-eks  --profile <user_profile_with_assume_role_for_managed-cloud-eks> --kubeconfig ~/.kube/managed-cloud-ec1-eks
 ```   
 NOTE: If the aws-auth configmap hasn't been applied yet, the only user that will work is the automation user which created the cluster. In the future argoCD will apply this map, so for bootstrap automation user will be needed.
 2. Export KUBECONFIG
