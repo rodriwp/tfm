@@ -14,19 +14,19 @@ variable "region" {
 variable "region_code" {}
 variable "min_size" {
   description = "Node group min size"
-  type = number
+  type        = number
 }
 variable "max_size" {
   description = "Node group max size"
-  type = number
+  type        = number
 }
 variable "desired_size" {
   description = "Node group desired capacity"
-  type = number
+  type        = number
 }
 variable "disk_size" {
   escription = "Node group disk size"
-  type = number
+  type       = number
 }
 variable "instance_type" {}
 variable "vpc_id" {}

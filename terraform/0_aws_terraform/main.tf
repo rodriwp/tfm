@@ -6,12 +6,12 @@ provider "aws" {
 }
 
 locals {
-  name                     = "mompo-${var.account_name}-${var.region_code}-eks"
-  region                   = var.region
-  cluster_version          = "1.28"
-  coredns_addon_version    = "v1.10.1-eksbuild.6"
-  kube-proxy_addon_version = "v1.28.4-eksbuild.1"
-  vpc-cni_addon_version    = "v1.16.0-eksbuild.1"
+  name                             = "mompo-${var.account_name}-${var.region_code}-eks"
+  region                           = var.region
+  cluster_version                  = "1.28"
+  coredns_addon_version            = "v1.10.1-eksbuild.6"
+  kube-proxy_addon_version         = "v1.28.4-eksbuild.1"
+  vpc-cni_addon_version            = "v1.16.0-eksbuild.1"
   aws-ebs-csi-driver_addon_version = "v1.11.2-eksbuild.1"
   tags = {
     env        = var.account_name
@@ -36,17 +36,17 @@ module "eks" {
   cluster_ip_family               = "ipv4"
 
   cluster_addons = {
-    coredns            = {
+    coredns = {
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "PRESERVE"
       addon_version               = local.coredns_addon_version
     }
-    kube-proxy         = {
+    kube-proxy = {
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "PRESERVE"
       addon_version               = local.kube-proxy_addon_version
     }
-    vpc-cni            = {
+    vpc-cni = {
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "PRESERVE"
       service_account_role_arn    = module.iam_eks_role_vpc_cni_irsa.iam_role_arn
@@ -83,7 +83,7 @@ module "eks" {
 
   manage_aws_auth_configmap = false #Managed externally to avoid provider issues and facilitate maintainability
 
-  eks_managed_node_groups   = {
+  eks_managed_node_groups = {
     eks_cluster_node_group = {
       name = local.name
 
@@ -98,10 +98,10 @@ module "eks" {
       capacity_type  = "ON_DEMAND"
       instance_types = [var.instance_type]
 
-      block_device_mappings   = {
+      block_device_mappings = {
         xvda = {
           device_name = "/dev/xvda"
-          ebs         = {
+          ebs = {
             volume_size           = var.disk_size
             volume_type           = "gp3"
             delete_on_termination = true
@@ -133,7 +133,7 @@ resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSServicePolicy" {
 ################################################################################
 
 module "iam_eks_role_vpc_cni_irsa" {
-  source                = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "5.33.0"
 
   role_name             = "mompo-${var.account_name}-${var.region_code}-eks-role-vpc-cni-irsa"
