@@ -2,20 +2,37 @@ name: AWS Terraform K8s
 on:
   workflow_dispatch:
     inputs:
-      applyTerraformToDev:
-        description: "Run Terraform Apply in Dev"
+      applyTerraform:
+        description: "Run Terraform Apply"
         required: true
         default: false
         type: boolean
+      onEnvironment:
+        type: choice
+        description: "Environments to perform terraform apply"
+        options:
+          - all
+          - managed-cloud
+        required: true
+        default: all
+  push:
+    branches:
+      - 'main'
+    paths:
+      - "terraform/**"
+  pull_request:
+    types: [opened, synchronize, reopened]
+env:
+  entrypoint: 1_kubernetes_terraform
 
 jobs:
   terraform-plan-all:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/') != true && github.event.inputs.applyTerraformToDev != 'true'
+    if: github.event.inputs.applyTerraform != 'true'
     strategy:
       matrix:
-        env: [ control, dev, prod]
+        env: [managed-cloud]
         region: [eu-central-1]
       fail-fast: false
     steps:
@@ -27,51 +44,55 @@ jobs:
         with:
           region: ${{ matrix.region}}
           environment: ${{ matrix.env}}
-          token: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
+          TF_API_TOKEN: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           runApply: false
-          workingDirectory: ./terraform/1_kubernetes_terraform
+          workingDirectory: ./terraform/${{ env.entrypoint}}
 
-  terraform-apply-dev:
+  terraform-apply-all:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/') != true && github.event.inputs.applyTerraformToDev == 'true'
+    if: github.event.inputs.applyTerraform == 'true' && github.event.inputs.onEnvironment == 'all'
     strategy:
       matrix:
-        env: [ dev]
+        env: [ managed-cloud ]
         region: [ eu-central-1 ]
       fail-fast: false
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Deploy AWS terraform in dev
+      - name: Plan AWS terraform
         uses: ./.github/workflows/composite/deploy-terraform
         with:
           region: ${{ matrix.region}}
           environment: ${{ matrix.env}}
-          token: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
+          TF_API_TOKEN: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           runApply: true
-          workingDirectory: ./terraform/1_kubernetes_terraform
+          workingDirectory: ./terraform/${{ env.entrypoint}}
 
-  terraform-apply-prod-and-control:
+  terraform-apply-one-env:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/') == true
+    if: github.event.inputs.applyTerraform == 'true' && github.event.inputs.onEnvironment != 'all'
     strategy:
       matrix:
-        env: [ prod, control ]
         region: [ eu-central-1 ]
       fail-fast: false
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Deploy AWS terraform in prod and control
+      - name: Plan AWS terraform
         uses: ./.github/workflows/composite/deploy-terraform
         with:
           region: ${{ matrix.region}}
-          environment: ${{ matrix.env}}
-          token: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
+          environment: ${{ github.event.inputs.onEnvironment}}
+          TF_API_TOKEN: ${{ secrets.TERRAFORM_TEAM_API_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           runApply: true
-          workingDirectory: ./terraform/1_kubernetes_terraform
-
+          workingDirectory: ./terraform/${{ env.entrypoint}}

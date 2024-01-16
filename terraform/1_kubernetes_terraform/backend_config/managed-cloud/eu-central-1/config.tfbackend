@@ -1,0 +1,2 @@
+organization = "Mompo"
+workspaces {name = "mompo-managed-cloud-ec1-eks-k8s"}
