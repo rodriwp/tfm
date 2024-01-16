@@ -80,6 +80,10 @@ jobs:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     if: github.event.inputs.applyTerraform == 'true' && github.event.inputs.onEnvironment != 'all'
+    strategy:
+      matrix:
+        region: [ eu-central-1 ]
+      fail-fast: false
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
