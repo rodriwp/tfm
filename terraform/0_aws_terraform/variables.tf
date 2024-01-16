@@ -25,7 +25,7 @@ variable "desired_size" {
   type        = number
 }
 variable "disk_size" {
-  escription = "Node group disk size"
+  description = "Node group disk size"
   type       = number
 }
 variable "instance_type" {}
