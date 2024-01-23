@@ -1,5 +1,15 @@
 cost-analyzer:
-
+  global:
+    grafana:
+      enabled: false
+      domainName: grafana.monitoring
+      proxy: false
+  grafana:
+    sidecar:
+      dashboards:
+        enabled: true
+      datasources:
+        enabled: false
   prometheus:
     nodeExporter:
       enabled: false
