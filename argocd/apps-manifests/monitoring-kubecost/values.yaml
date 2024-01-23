@@ -1,16 +1,4 @@
 cost-analyzer:
-  global:
-    grafana:
-      enabled: false
-      domainName: grafana.monitoring
-      proxy: false
-  grafana:
-    sidecar:
-      dashboards:
-        enabled: true
-        searchNamespace: ALL
-      datasources:
-        enabled: false
   prometheus:
     nodeExporter:
       enabled: false
@@ -19,5 +7,3 @@ cost-analyzer:
         create: false
   networkCosts:
     enabled: true
-  kubecostProductConfigs:
-    grafanaURL: grafana.monitoring

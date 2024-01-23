@@ -33,13 +33,6 @@ kube-prometheus-stack:
     serviceMonitor:
       enabled: true
     adminPassword: admin
-    additionalDataSources:
-      - name: Kubecost
-        type: Kubecost
-        isDefault: false
-        access: proxy
-        url: http://kubecost-prometheus-server.kubecost.svc.cluster.local:9090
-        version: 1
 
   kubeApiServer:
     enabled: true
