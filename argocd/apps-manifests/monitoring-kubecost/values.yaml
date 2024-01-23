@@ -1,9 +1,9 @@
 cost-analyzer:
   prometheus:
     nodeExporter:
-      enabled: false
+      enabled: true
     serviceAccounts:
       nodeExporter:
-        create: false
+        create: true
   networkCosts:
     enabled: true
