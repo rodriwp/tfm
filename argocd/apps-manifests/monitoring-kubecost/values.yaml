@@ -11,7 +11,7 @@ cost-analyzer:
           # IPv4 Link Local Address Space
           - "169.254.0.0/16"
           # Private Address Ranges in RFC-1918
-          - "172.16.0.0/12"
+          #- "172.16.0.0/12"
           - "192.168.0.0/16"
 
         # In Region contains a list of address/range that will be
