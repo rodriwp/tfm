@@ -1,9 +1,6 @@
 cost-analyzer:
-  prometheus:
-    nodeExporter:
-      enabled: true
-    serviceAccounts:
-      nodeExporter:
-        create: true
   networkCosts:
     enabled: true
+    config:
+      services:
+        amazon-web-services: true
