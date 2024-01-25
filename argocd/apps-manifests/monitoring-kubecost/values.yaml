@@ -11,14 +11,18 @@ cost-analyzer:
           # IPv4 Link Local Address Space
           - "169.254.0.0/16"
           # Private Address Ranges in RFC-1918
-          #- "172.16.0.0/12"
+          - "172.16.0.0/12"
           - "192.168.0.0/16"
+
 
         # In Region contains a list of address/range that will be
         # classified as in region. This is synonymous with cross
         # zone traffic, where the regions between source and destinations
         # are the same, but the zone is different.
-        in-region: []
+        in-region:
+          - "10.30.128.0/20"
+          - "10.30.144.0/20"
+          - "10.30.160.0/20"
 
         # Cross Region contains a list of address/range that will be
         # classified as non-internet egress from one region to another.
