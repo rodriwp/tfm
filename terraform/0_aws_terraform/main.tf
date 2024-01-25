@@ -21,7 +21,56 @@ locals {
 
 data "aws_caller_identity" "current" {}
 data "aws_partition" "current" {}
+################################################################################
+# VPC Module
+################################################################################
+data "aws_availability_zones" "available" {
+}
 
+data "aws_security_group" "default" {
+  name   = "default"
+  vpc_id = module.vpc.vpc_id
+}
+
+resource "aws_eip" "nat" {
+  lifecycle {
+    prevent_destroy = true
+  }
+  tags = merge(
+  local.tags,
+  {
+    Name = "kubernetes-vpc"
+  },
+  )
+}
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.0.0"
+
+  name                                 = "kubernetes-vpc"
+  azs                                  = data.aws_availability_zones.available.names
+  cidr                                 = var.cidr
+  private_subnets                      = var.private_subnets
+  public_subnets                       = var.public_subnets
+  enable_flow_log                      = false
+  create_flow_log_cloudwatch_log_group = false
+  create_flow_log_cloudwatch_iam_role  = false
+  flow_log_max_aggregation_interval    = 60
+  enable_nat_gateway                   = true
+  single_nat_gateway                   = true
+  enable_dns_hostnames                 = true
+  reuse_nat_ips                        = true
+  external_nat_ip_ids                  = [aws_eip.nat.id]
+  public_subnet_tags = {
+    "kubernetes.io/cluster/${local.name}" = "shared"
+    "kubernetes.io/role/elb"                           = "1"
+  }
+  private_subnet_tags = {
+    "kubernetes.io/cluster/${local.name}" = "shared"
+    "kubernetes.io/role/internal-elb"                  = "1"
+  }
+  tags                      = local.tags
+}
 ################################################################################
 # EKS Module
 ################################################################################
