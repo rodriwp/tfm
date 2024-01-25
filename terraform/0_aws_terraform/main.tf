@@ -37,10 +37,10 @@ resource "aws_eip" "nat" {
     prevent_destroy = true
   }
   tags = merge(
-  local.tags,
-  {
-    Name = "kubernetes-vpc"
-  },
+    local.tags,
+    {
+      Name = "kubernetes-vpc"
+    },
   )
 }
 module "vpc" {
@@ -63,13 +63,13 @@ module "vpc" {
   external_nat_ip_ids                  = [aws_eip.nat.id]
   public_subnet_tags = {
     "kubernetes.io/cluster/${local.name}" = "shared"
-    "kubernetes.io/role/elb"                           = "1"
+    "kubernetes.io/role/elb"              = "1"
   }
   private_subnet_tags = {
     "kubernetes.io/cluster/${local.name}" = "shared"
-    "kubernetes.io/role/internal-elb"                  = "1"
+    "kubernetes.io/role/internal-elb"     = "1"
   }
-  tags                      = local.tags
+  tags = local.tags
 }
 ################################################################################
 # EKS Module
