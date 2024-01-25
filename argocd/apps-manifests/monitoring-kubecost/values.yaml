@@ -11,7 +11,6 @@ cost-analyzer:
           # IPv4 Link Local Address Space
           - "169.254.0.0/16"
           # Private Address Ranges in RFC-1918
-          - "10.0.0.0/8" # Remove this entry if using Multi-AZ Kubernetes
           - "172.16.0.0/12"
           - "192.168.0.0/16"
 
@@ -19,7 +18,7 @@ cost-analyzer:
         # classified as in region. This is synonymous with cross
         # zone traffic, where the regions between source and destinations
         # are the same, but the zone is different.
-        in-region: [ ]
+        in-region: []
 
         # Cross Region contains a list of address/range that will be
         # classified as non-internet egress from one region to another.
@@ -28,11 +27,19 @@ cost-analyzer:
         # Direct Classification specifically maps an ip address or range
         # to a region (required) and/or zone (optional). This classification
         # takes priority over in-zone, in-region, and cross-region configurations.
-        direct-classification: [ ]
-        # - region: "us-east1"
-        #   zone: "us-east1-c"
-        #   ips:
-        #     - "10.0.0.0/24"
+        direct-classification:
+         - region: "eu-central-1"
+           zone: "eu-central-1a"
+           ips:
+             - "10.30.0.0/20"
+         - region: "eu-central-1"
+           zone: "eu-central-1b"
+           ips:
+             - "10.30.0.0/20"
+         - region: "eu-central-1"
+           zone: "eu-central-1c"
+           ips:
+             - "10.30.0.0/20"
       services:
         amazon-web-services: true
 
