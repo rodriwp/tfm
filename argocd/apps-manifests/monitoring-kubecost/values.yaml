@@ -35,11 +35,11 @@ cost-analyzer:
          - region: "eu-central-1"
            zone: "eu-central-1b"
            ips:
-             - "10.30.0.0/20"
+             - "10.30.16.0/20"
          - region: "eu-central-1"
            zone: "eu-central-1c"
            ips:
-             - "10.30.0.0/20"
+             - "10.30.32.0/20"
       services:
         amazon-web-services: true
 
