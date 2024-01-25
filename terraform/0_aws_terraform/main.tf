@@ -49,7 +49,7 @@ module "vpc" {
 
   name                                 = "kubernetes-vpc"
   azs                                  = data.aws_availability_zones.available.names
-  cidr                                 = var.cidr
+  cidr                                 = var.vpc_cidr
   private_subnets                      = var.private_subnets
   public_subnets                       = var.public_subnets
   enable_flow_log                      = false
@@ -114,8 +114,8 @@ module "eks" {
     Name = local.name
   }
 
-  vpc_id     = var.vpc_id
-  subnet_ids = var.subnet_ids
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = var.private_subnets
 
   # Extend cluster security group rules
   cluster_security_group_additional_rules = {
@@ -145,7 +145,7 @@ module "eks" {
       max_size       = var.max_size
       desired_size   = var.desired_size
       capacity_type  = "ON_DEMAND"
-      instance_types = [var.instance_type]
+      instance_types = var.instance_type
 
       block_device_mappings = {
         xvda = {
