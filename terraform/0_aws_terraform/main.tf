@@ -33,9 +33,6 @@ data "aws_security_group" "default" {
 }
 
 resource "aws_eip" "nat" {
-  lifecycle {
-    prevent_destroy = true
-  }
   tags = merge(
     local.tags,
     {
@@ -115,7 +112,7 @@ module "eks" {
   }
 
   vpc_id     = module.vpc.vpc_id
-  subnet_ids = var.private_subnets
+  subnet_ids = module.vpc.private_subnets
 
   # Extend cluster security group rules
   cluster_security_group_additional_rules = {
