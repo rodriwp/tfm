@@ -6,6 +6,7 @@ plex-media-server:
     ingressClassName: nginx
   service:
     type: LoadBalancer
+    port: 80
   pms:
     extraEnv:
     # This claim is optional, and is only used for the first startup of PMS
