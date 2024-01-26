@@ -1,6 +1,6 @@
 cost-analyzer:
   networkCosts:
-    enabled: false
+    enabled: true
     config:
       destinations:
         # In Zone contains a list of address/range that will be
