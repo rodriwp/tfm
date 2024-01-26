@@ -31,6 +31,8 @@ cost-analyzer:
         # Direct Classification specifically maps an ip address or range
         # to a region (required) and/or zone (optional). This classification
         # takes priority over in-zone, in-region, and cross-region configurations.
+        internet:
+          - "10.30.152.15"
         direct-classification:
          - region: "eu-central-1"
            zone: "eu-central-1a"
