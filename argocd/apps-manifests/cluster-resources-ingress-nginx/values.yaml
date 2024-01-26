@@ -9,4 +9,6 @@ ingress-nginx:
       enabled: true
       serviceMonitor:
         enabled: true
+    service:
+      clusterIP: "10.30.152.15"
 

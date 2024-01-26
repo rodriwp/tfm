@@ -1,4 +1,36 @@
 cost-analyzer:
+  kubecostFrontend:
+    image: public.ecr.aws/kubecost/frontend
+    imagePullPolicy: Always
+    resources:
+      requests:
+        cpu: "10m"
+        memory: "55Mi"
+      #limits:
+      #  cpu: "100m"
+      #  memory: "256Mi"
+
+  kubecostModel:
+    image: public.ecr.aws/kubecost/cost-model
+    imagePullPolicy: Always
+    warmCache: true
+    etl: true
+    # The total number of days the ETL pipelines will build
+    # Set to 0 to disable daily ETL (not recommended)
+    etlDailyStoreDurationDays: 120
+    maxQueryConcurrency: 5
+    # utcOffset represents a timezone in hours and minutes east (+) or west (-)
+    # of UTC, itself, which is defined as +00:00.
+    # See the tz database of timezones to look up your local UTC offset:
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    utcOffset: "+00:00"
+    resources:
+      requests:
+        cpu: "200m"
+        memory: "55Mi"
+      #limits:
+      #  cpu: "800m"
+      #  memory: "256Mi"
   networkCosts:
     enabled: true
     config:
