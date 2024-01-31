@@ -64,7 +64,7 @@ cost-analyzer:
         # to a region (required) and/or zone (optional). This classification
         # takes priority over in-zone, in-region, and cross-region configurations.
         internet:
-          - "10.30.151.231"
+          - "10.30.154.153"
         direct-classification:
          - region: "eu-central-1"
            zone: "eu-central-1a"
