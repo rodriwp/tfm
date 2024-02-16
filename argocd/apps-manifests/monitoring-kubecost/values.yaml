@@ -34,6 +34,12 @@ cost-analyzer:
   networkCosts:
     enabled: true
     config:
+      resources:
+        requests:
+          cpu: "300m"
+          memory: "55Mi"
+        limits:
+          cpu: "800m"
       destinations:
         # In Zone contains a list of address/range that will be
         # classified as in zone.
